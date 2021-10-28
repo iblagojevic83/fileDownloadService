@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TruckMilesStateRepository extends JpaRepository<TruckDrivenMilesState, Long> {
 
-
     TruckDrivenMilesState findByTruckId(String truckId);
 }

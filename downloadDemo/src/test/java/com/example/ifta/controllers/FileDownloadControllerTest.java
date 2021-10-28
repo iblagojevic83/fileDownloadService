@@ -49,10 +49,10 @@ public class FileDownloadControllerTest {
         List<VehicleData> vehicleData = new ArrayList<>();
         VehicleData data = new VehicleData("UA-test", "vehicleID-test", "lastActiveGroup-test",
                 50, 50, 50,
-                50, "AL-test", "AR-test", "AZ-test");
+                50, new ArrayList(Arrays.asList("AL-test", "AR-test", "AZ-test")));
         VehicleData data1 = new VehicleData("UA-test-1", "vehicleID-test-1", "lastActiveGroup-test-1",
                 50, 50, 50,
-                50, "AL-test-1", "AR-test-1", "AZ-test-1");
+                50, new ArrayList(Arrays.asList("AL-test1", "AR-test1", "AZ-test1")));
         vehicleData.add(data);
         vehicleData.add(data1);
         fileDataDto.setFileType(FileTypeEnum.CSV.name());

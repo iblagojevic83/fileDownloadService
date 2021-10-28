@@ -8,7 +8,6 @@ import com.example.ifta.entities.RegisterState;
 import com.example.ifta.entities.TruckDrivenMilesState;
 import com.example.ifta.models.VehicleData;
 import com.example.ifta.models.enums.FileHeaderEnum;
-import com.example.ifta.models.enums.FileTypeEnum;
 import com.example.ifta.services.FileService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -18,40 +17,43 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 
 import static com.example.ifta.utils.FileUtils.formatDateTime;
 
 @Service
 public class FileServiceImpl implements FileService {
 
-    private final TruckMilesStateRepository truckMilesStateDAO;
-    private final IftaJurisdictionRepository iftaJurisdictionDAO;
-    private final RegisterStateRepository registerStateDAO;
+    private final TruckMilesStateRepository truckMilesStateRepository;
+    private final IftaJurisdictionRepository iftaJurisdictionRepository;
+    private final RegisterStateRepository registerStateRepository;
 
     @Autowired
     public FileServiceImpl(TruckMilesStateRepository truckMilesStateDAO, IftaJurisdictionRepository iftaJurisdictionDAO, RegisterStateRepository registerStateDAO) {
-        this.truckMilesStateDAO = truckMilesStateDAO;
-        this.iftaJurisdictionDAO = iftaJurisdictionDAO;
-        this.registerStateDAO = registerStateDAO;
+        this.truckMilesStateRepository = truckMilesStateDAO;
+        this.iftaJurisdictionRepository = iftaJurisdictionDAO;
+        this.registerStateRepository = registerStateDAO;
     }
 
     @Override
-    public File writeToFile(String truckId) throws IOException {
-        VehicleData data = getVehicleData(truckId);
-        CSVFormat format = getFormat();
+    public File writeToFile(final String truckId) throws IOException {
+        final VehicleData data = getVehicleData(truckId);
+        final CSVFormat format = CSVFormat.EXCEL;
         File file = new File(getFileName(format));
         CSVPrinter csvPrinter = getCsvPrinter(file);
+        //TODO Instead 50 calculate total sum
         csvPrinter.printRecord(Arrays.asList(data.getUA(), data.getVehicleID(), data.getLastActiveGroup(), data.getBeginningOdometer(),
-                data.getEndingOdometer(), data.getTotalVehicleMileage(), data.getTotalVehicleMileage(), data.getAL(), data.getAR(), data.getAZ()));
+                data.getEndingOdometer(), data.getTotalVehicleMileage(), data.getTotalVehicleMileage(), 50));
         csvPrinter.flush();
         csvPrinter.close();
         return file;
     }
 
     private CSVPrinter getCsvPrinter(File file) throws IOException {
-        CSVPrinter csvPrinter = new CSVPrinter(new FileWriter(file), getFormat());
+        CSVPrinter csvPrinter = new CSVPrinter(new FileWriter(file), CSVFormat.EXCEL);
         csvPrinter.printRecord(FileHeaderEnum.getHeadersList());
         csvPrinter.flush();
         return csvPrinter;
@@ -59,11 +61,16 @@ public class FileServiceImpl implements FileService {
 
 
     private VehicleData getVehicleData(String truckId) {
-        TruckDrivenMilesState truckState = truckMilesStateDAO.findByTruckId(truckId);
-        IftaJurisdiction iftaJurisdiction = iftaJurisdictionDAO.getById(truckState.getStateJurisdiction());
-        RegisterState registerState = registerStateDAO.getById(iftaJurisdiction.getRegisterStateId());
-        return VehicleData.builder().vehicleID(truckState.getTruckId()).endingOdometer(truckState.getEndOdometer())
-                .beginningOdometer(truckState.getStartOdometer()).totalVehicleMileage(truckState.getSumTotalMiles()).build();
+        TruckDrivenMilesState truckState = truckMilesStateRepository.findByTruckId(truckId);
+        Optional<IftaJurisdiction> iftaJurisdiction = iftaJurisdictionRepository.findById(truckState.getStateJurisdiction());
+        Optional<RegisterState> registerState = registerStateRepository.findByid(iftaJurisdiction.get().getRegisterStateId());
+        final String state = registerState.get().getStateCode();
+        return VehicleData.builder()
+                .vehicleID(truckState.getTruckId())
+                .endingOdometer(truckState.getEndOdometer())
+                .states(new ArrayList(Arrays.asList(state)))
+                .beginningOdometer(truckState.getStartOdometer())
+                .totalVehicleMileage(truckState.getSumTotalMiles()).build();
     }
 
     private String getFileName(CSVFormat format) {
@@ -71,10 +78,6 @@ public class FileServiceImpl implements FileService {
         StringBuilder builder = new StringBuilder();
         builder.append("report").append("-").append(formatDateTime(new Date())).append(extension);
         return builder.toString();
-    }
-
-    private CSVFormat getFormat() {
-        return CSVFormat.EXCEL;
     }
 
 }

@@ -2,6 +2,8 @@ package com.example.ifta.models;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -16,18 +18,21 @@ public class VehicleData {
     private Integer endingOdometer;
     private Integer totalOdometer;
     private Integer totalVehicleMileage;
-    private String AL;
-    private String AR;
-    private String AZ;
+    private List<String> states;
 
     @Override
     public String toString() {
-        String comma = ",";
+        final String comma = ",";
         StringBuilder builder = new StringBuilder();
-        builder.append(UA).append(comma).append(vehicleID).append(comma).append(lastActiveGroup).append(comma)
-                .append(beginningOdometer).append(comma).append(endingOdometer).append(comma).append(totalOdometer).append(comma)
-                .append(totalVehicleMileage).append(comma).append(AL).append(comma).append(AR).append(comma).append(AZ);
+        builder
+                .append(UA).append(comma)
+                .append(vehicleID).append(comma)
+                .append(lastActiveGroup).append(comma)
+                .append(beginningOdometer).append(comma)
+                .append(endingOdometer).append(comma)
+                .append(totalOdometer).append(comma)
+                .append(totalVehicleMileage);
+        states.stream().forEach(state -> builder.append(state).append(comma));
         return builder.toString();
-
     }
 }

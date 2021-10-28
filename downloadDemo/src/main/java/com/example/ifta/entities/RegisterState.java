@@ -8,16 +8,16 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "register_state")
+@Table(name = "registered_state")
 @Getter
 @Setter
 @NoArgsConstructor
 public class RegisterState extends BaseEntity {
 
-    @Column(name="state_name")
+    @Column(name="name")
     private String stateName;
 
-    @Column(name="state_code")
+    @Column(name="code")
     private String stateCode;
 
 }
