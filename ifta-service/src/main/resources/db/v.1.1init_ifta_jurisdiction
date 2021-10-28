@@ -1,0 +1,32 @@
+-- Table: ifta_jurisdiction
+
+-- DROP TABLE ifta_jurisdiction;
+
+CREATE TABLE ifta_jurisdiction
+(
+    id integer NOT NULL,
+    code character varying(255) COLLATE pg_catalog."default",
+    created_by character varying(255) COLLATE pg_catalog."default",
+    created_on integer,
+    register_state_id integer,
+    updated_by character varying(255) COLLATE pg_catalog."default",
+    updated_on integer,
+    CONSTRAINT ifta_jurisdiction_pkey PRIMARY KEY (id),
+    CONSTRAINT registered_state_fkey FOREIGN KEY (register_state_id)
+        REFERENCES registered_state (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+    TABLESPACE pg_default;
+
+ALTER TABLE ifta_jurisdiction
+    OWNER to postgres;
+-- Index: fki_registered_state_fkey
+
+-- DROP INDEX fki_registered_state_fkey;
+
+CREATE INDEX fki_registered_state_fkey
+    ON ifta_jurisdiction USING btree
+        (register_state_id ASC NULLS LAST)
+    TABLESPACE pg_default;

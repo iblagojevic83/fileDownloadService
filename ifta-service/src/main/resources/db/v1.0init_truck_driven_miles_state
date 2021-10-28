@@ -1,0 +1,40 @@
+-- Table: truck_driven_miles_state
+
+-- DROP TABLE truck_driven_miles_state;
+
+CREATE TABLE truck_driven_miles_state
+(
+    id integer NOT NULL,
+    created_by character varying(255) COLLATE pg_catalog."default",
+    created_on integer,
+    date timestamp without time zone,
+    end_date_time timestamp without time zone,
+    end_odometer integer,
+    end_telemetry_id integer,
+    start_date_time timestamp without time zone,
+    start_odometer integer,
+    state_telemetry_id integer,
+    state_jurisdiction integer,
+    sum_total_miles integer,
+    truck_id character varying(255) COLLATE pg_catalog."default",
+    updated_by character varying(255) COLLATE pg_catalog."default",
+    updated_on integer,
+    CONSTRAINT truck_driven_miles_state_pkey PRIMARY KEY (id),
+    CONSTRAINT ifta_jurisdiction_fkey FOREIGN KEY (state_jurisdiction)
+        REFERENCES ifta_jurisdiction (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+    TABLESPACE pg_default;
+
+ALTER TABLE truck_driven_miles_state
+    OWNER to postgres;
+-- Index: fki_ifta_jurisdiction_fkey
+
+-- DROP INDEX fki_ifta_jurisdiction_fkey;
+
+CREATE INDEX fki_ifta_jurisdiction_fkey
+    ON truck_driven_miles_state USING btree
+        (state_jurisdiction ASC NULLS LAST)
+    TABLESPACE pg_default;
