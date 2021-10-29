@@ -19,6 +19,7 @@ public class VehicleMileageReportItem {
     private Integer totalOdometer;
     private Integer totalVehicleMileage;
     private List<String> states;
+    private String state;
 
     @Override
     public String toString() {

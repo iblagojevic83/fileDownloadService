@@ -14,6 +14,6 @@ public interface RegisterStateRepository extends JpaRepository<RegisterState, Lo
 
     @Transactional(readOnly = true)
     @Query("select state from RegisterState state where state.id = :id")
-    Optional<RegisterState> findByid(@Param("id") Long stateId);
+    Optional<RegisterState> findById(@Param("id") Long stateId);
 
 }

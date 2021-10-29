@@ -11,11 +11,7 @@ public enum FileHeaderEnum {
     BEGINNING_ODOMETER("Beginning Odometer"),
     ENDING_ODOMETER("Ending Odometer"),
     TOTAL_ODOMETER("Total Odometer"),
-    TOTAL_VEHICLE_MILEAGE("Total Vehicle Mileage"),
-    CA("CA"),
-    AL("AL"),
-    AR("AR"),
-    AZ("AZ");
+    TOTAL_VEHICLE_MILEAGE("Total Vehicle Mileage");
 
     private String header;
     private static List<String> headersList = new ArrayList<>();
@@ -32,10 +28,6 @@ public enum FileHeaderEnum {
         headersList.add(ENDING_ODOMETER.getHeader());
         headersList.add(TOTAL_ODOMETER.getHeader());
         headersList.add(TOTAL_VEHICLE_MILEAGE.getHeader());
-        headersList.add(AL.getHeader());
-        headersList.add(AR.getHeader());
-        headersList.add(AZ.getHeader());
-        headersList.add(CA.getHeader());
     }
 
     public String getHeader() {

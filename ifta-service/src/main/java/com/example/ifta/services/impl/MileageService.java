@@ -35,7 +35,7 @@ public class MileageService {
     public File getTruckMileageReport(String truckId) throws IOException {
         List<TruckDrivenMilesState> truckState = truckMilesStateRepository.findByTruckId(truckId);
         Optional<IftaJurisdiction> iftaJurisdiction = iftaJurisdictionRepository.findById(truckState.get(0).getStateJurisdiction());
-        Optional<RegisterState> registerState = registerStateRepository.findByid(iftaJurisdiction.get().getRegisterStateId());
+        Optional<RegisterState> registerState = registerStateRepository.findById(iftaJurisdiction.get().getRegisterStateId());
         VehicleMileageReportItem vehicleData = prepareTruckData(truckState.get(0), iftaJurisdiction, registerState);
         return fileService.writeToFile(vehicleData);
     }
@@ -46,6 +46,7 @@ public class MileageService {
                 .vehicleID(truckState.getTruckId())
                 .endingOdometer(truckState.getEndOdometer())
                 .states(new ArrayList(Arrays.asList(state)))
+                .state(state)
                 .beginningOdometer(truckState.getStartOdometer())
                 .totalVehicleMileage(truckState.getSumTotalMiles()).build();
     }
