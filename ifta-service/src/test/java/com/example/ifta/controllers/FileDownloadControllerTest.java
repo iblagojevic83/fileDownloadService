@@ -1,7 +1,7 @@
 package com.example.ifta.controllers;
 
 import com.example.ifta.models.FileDataDto;
-import com.example.ifta.models.VehicleData;
+import com.example.ifta.models.VehicleMileageReportItem;
 import com.example.ifta.models.enums.FileTypeEnum;
 import org.junit.Assert;
 import org.junit.Test;
@@ -46,11 +46,11 @@ public class FileDownloadControllerTest {
 
     private FileDataDto getFileData() {
         FileDataDto fileDataDto = new FileDataDto();
-        List<VehicleData> vehicleData = new ArrayList<>();
-        VehicleData data = new VehicleData("UA-test", "vehicleID-test", "lastActiveGroup-test",
+        List<VehicleMileageReportItem> vehicleData = new ArrayList<>();
+        VehicleMileageReportItem data = new VehicleMileageReportItem("UA-test", "vehicleID-test", "lastActiveGroup-test",
                 50, 50, 50,
                 50, new ArrayList(Arrays.asList("AL-test", "AR-test", "AZ-test")));
-        VehicleData data1 = new VehicleData("UA-test-1", "vehicleID-test-1", "lastActiveGroup-test-1",
+        VehicleMileageReportItem data1 = new VehicleMileageReportItem("UA-test-1", "vehicleID-test-1", "lastActiveGroup-test-1",
                 50, 50, 50,
                 50, new ArrayList(Arrays.asList("AL-test1", "AR-test1", "AZ-test1")));
         vehicleData.add(data);

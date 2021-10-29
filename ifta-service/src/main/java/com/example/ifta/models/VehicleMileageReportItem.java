@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VehicleData {
+public class VehicleMileageReportItem {
 
     private String UA;
     private String vehicleID;

@@ -1,6 +1,6 @@
 package com.example.ifta.services.impl;
 
-import com.example.ifta.models.VehicleData;
+import com.example.ifta.models.VehicleMileageReportItem;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import static com.example.ifta.utils.FileUtils.getFileName;
 @Component
 public class FileService {
 
-    public File writeToFile(final VehicleData data) throws IOException {
+    public File writeToFile(final VehicleMileageReportItem data) throws IOException {
         final CSVFormat format = CSVFormat.EXCEL;
         File file = new File(getFileName(format));
         CSVPrinter csvPrinter = getCsvPrinter(file);

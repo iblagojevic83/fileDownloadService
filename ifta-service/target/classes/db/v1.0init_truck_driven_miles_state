@@ -28,6 +28,8 @@ CREATE TABLE truck_driven_miles_state
 
     TABLESPACE pg_default;
 
+ALTER TABLE truck_driven_miles_state
+    OWNER to postgres;
 -- Index: fki_ifta_jurisdiction_fkey
 
 -- DROP INDEX fki_ifta_jurisdiction_fkey;

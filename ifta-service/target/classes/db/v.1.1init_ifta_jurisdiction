@@ -20,6 +20,8 @@ CREATE TABLE ifta_jurisdiction
 
     TABLESPACE pg_default;
 
+ALTER TABLE ifta_jurisdiction
+    OWNER to postgres;
 -- Index: fki_registered_state_fkey
 
 -- DROP INDEX fki_registered_state_fkey;

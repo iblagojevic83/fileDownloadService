@@ -12,6 +12,6 @@ import java.util.List;
 public class FileDataDto {
 
     private String fileType;
-    List<VehicleData> vehicleData;
+    List<VehicleMileageReportItem> vehicleData;
 
 }
