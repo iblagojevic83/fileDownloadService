@@ -47,14 +47,14 @@ public class FileDownloadControllerTest {
     private FileDataDto getFileData() {
         FileDataDto fileDataDto = new FileDataDto();
         List<VehicleMileageReportItem> vehicleData = new ArrayList<>();
-//        VehicleMileageReportItem data = new VehicleMileageReportItem("UA-test", "vehicleID-test", "lastActiveGroup-test",
-//                50, 50, 50,
-//                50, new ArrayList(Arrays.asList("AL-test", "AR-test", "AZ-test")));
-//        VehicleMileageReportItem data1 = new VehicleMileageReportItem("UA-test-1", "vehicleID-test-1", "lastActiveGroup-test-1",
-//                50, 50, 50,
-//                50, new ArrayList(Arrays.asList("AL-test1", "AR-test1", "AZ-test1")));
-//        vehicleData.add(data);
-//        vehicleData.add(data1);
+        VehicleMileageReportItem data = new VehicleMileageReportItem("UA-test", "vehicleID-test", "lastActiveGroup-test",
+                50, 50, 50,
+                50, new ArrayList(Arrays.asList("AL-test", "AR-test", "AZ-test")), "AZ");
+        VehicleMileageReportItem data1 = new VehicleMileageReportItem("UA-test-1", "vehicleID-test-1", "lastActiveGroup-test-1",
+                50, 50, 50,
+                50, new ArrayList(Arrays.asList("AL-test1", "AR-test1", "AZ-test1")), "AZ");
+        vehicleData.add(data);
+        vehicleData.add(data1);
         fileDataDto.setFileType(FileTypeEnum.CSV.name());
         fileDataDto.setVehicleData(vehicleData);
         return fileDataDto;
