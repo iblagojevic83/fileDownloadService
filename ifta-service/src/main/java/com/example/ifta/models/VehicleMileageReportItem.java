@@ -1,8 +1,11 @@
 package com.example.ifta.models;
 
+import com.example.ifta.entities.RegisterState;
+import com.example.ifta.models.enums.RegisteredStateEnum;
 import lombok.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter

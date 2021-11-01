@@ -1,7 +1,9 @@
 package com.example.ifta.controllers;
 
+import com.example.ifta.models.MileageSearchDto;
 import com.example.ifta.services.impl.MileageService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,8 +27,8 @@ public class FileDownloadController {
     }
 
     @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public void downloadMileageReport(@RequestParam("truckId")final String truckId, HttpServletResponse response) throws IOException {
-        final File file = mileageService.getTruckMileageReport(truckId);
+    public void downloadMileageReport(final MileageSearchDto searchDto, HttpServletResponse response) throws IOException {
+        final File file = mileageService.getTruckMileageReport(searchDto);
         streamFile(file, response);
     }
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,13 +29,13 @@ public class TruckDrivenMilesState extends BaseAuditEntity {
     private Integer startOdometer;
 
     @Column(name="start_date_time")
-    private Date startDateTime;
+    private OffsetDateTime startDateTime;
 
     @Column(name="end_odometer")
     private Integer endOdometer;
 
     @Column(name="end_date_time")
-    private Date endDateTime;
+    private OffsetDateTime endDateTime;
 
     @Column(name="end_telemetry_id")
     private Integer endTelemetryId;
