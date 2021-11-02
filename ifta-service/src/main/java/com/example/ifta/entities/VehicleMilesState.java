@@ -1,5 +1,6 @@
 package com.example.ifta.entities;
 
+import com.example.ifta.utils.BaseEntity;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
         name = "list-array",
         typeClass = ListArrayType.class
 )
-public class VehicleMilesState {
+public class VehicleMilesState extends BaseEntity {
 
     @Column(name = "truck_id")
     private String truckId;
