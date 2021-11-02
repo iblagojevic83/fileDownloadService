@@ -1,6 +1,7 @@
 package com.example.ifta.repository;
 
 import com.example.ifta.entities.TruckDrivenMilesState;
+import com.example.ifta.entities.VehicleMilesState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +19,6 @@ public interface TruckMilesStateRepository extends JpaRepository<TruckDrivenMile
     @Query(value = "SELECT tdms FROM TruckDrivenMilesState tdms " +
             "WHERE (((CAST(:startDateTime AS OffsetDateTime) IS NULL)) OR (tdms.startDateTime >= :startDateTime))" +
             "AND (((CAST(:endDateTime AS OffsetDateTime) IS NULL)) OR (tdms.endDateTime >= :endDateTime))")
-    List<TruckDrivenMilesState> findBySearchParams(@Param("startDateTime") OffsetDateTime startDateTime,
-                                                   @Param("endDateTime") OffsetDateTime endDateTime);
+    List<VehicleMilesState> findBySearchParams(@Param("startDateTime") OffsetDateTime startDateTime,
+                                               @Param("endDateTime") OffsetDateTime endDateTime);
 }

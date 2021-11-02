@@ -21,8 +21,7 @@ public class VehicleMileageReportItem {
     private Integer endingOdometer;
     private Integer totalOdometer;
     private Integer totalVehicleMileage;
-    private List<String> states;
-    private String state;
+    private Map<RegisteredStateEnum, Integer> states;
 
     @Override
     public String toString() {
@@ -36,7 +35,7 @@ public class VehicleMileageReportItem {
                 .append(endingOdometer).append(comma)
                 .append(totalOdometer).append(comma)
                 .append(totalVehicleMileage);
-        states.stream().forEach(state -> builder.append(state).append(comma));
+        states.forEach((key, value) -> builder.append(key.getCode()).append(comma));
         return builder.toString();
     }
 }

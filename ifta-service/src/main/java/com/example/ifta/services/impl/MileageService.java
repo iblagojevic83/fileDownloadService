@@ -1,10 +1,9 @@
 package com.example.ifta.services.impl;
 
-import com.example.ifta.entities.IftaJurisdiction;
-import com.example.ifta.entities.RegisterState;
-import com.example.ifta.entities.TruckDrivenMilesState;
+import com.example.ifta.entities.*;
 import com.example.ifta.models.MileageSearchDto;
 import com.example.ifta.models.VehicleMileageReportItem;
+import com.example.ifta.models.enums.RegisteredStateEnum;
 import com.example.ifta.models.search.TimeFilter;
 import com.example.ifta.repository.IftaJurisdictionRepository;
 import com.example.ifta.repository.RegisterStateRepository;
@@ -14,10 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MileageService {
@@ -38,21 +34,19 @@ public class MileageService {
     public File getTruckMileageReport(MileageSearchDto mileageSearchDto) throws IOException {
         final OffsetDateTime timeFrom = Optional.of(mileageSearchDto).map(MileageSearchDto::getStartTimeFilter).map(TimeFilter::getFrom).orElse(null);
         final OffsetDateTime timeTo = Optional.of(mileageSearchDto).map(MileageSearchDto::getEndTimeFilter).map(TimeFilter::getTo).orElse(null);
-        List<TruckDrivenMilesState> truckState = truckMilesStateRepository.findBySearchParams(timeFrom, timeTo);
-        Optional<IftaJurisdiction> iftaJurisdiction = iftaJurisdictionRepository.findById(truckState.get(0).getStateJurisdiction());
-        Optional<RegisterState> registerState = registerStateRepository.findById(iftaJurisdiction.get().getRegisterStateId());
-        VehicleMileageReportItem vehicleData = prepareTruckData(truckState.get(0), iftaJurisdiction, registerState);
+        List<VehicleMilesState> truckState = truckMilesStateRepository.findBySearchParams(timeFrom, timeTo);
+        VehicleMileageReportItem vehicleData = prepareTruckData(truckState.get(0));
         return fileService.writeToFile(vehicleData);
     }
 
-    private VehicleMileageReportItem prepareTruckData(TruckDrivenMilesState truckState, Optional<IftaJurisdiction> iftaJurisdictio, Optional<RegisterState> registerState){
-        final String state = registerState.get().getStateCode();
+    private VehicleMileageReportItem prepareTruckData(VehicleMilesState truckState) {
+        Map<RegisteredStateEnum, Integer> stateMileage = new HashMap<>();
+        truckState.getTotalMileagesPerJurisdiction()
+                .forEach(registerStateMileage -> stateMileage.put(registerStateMileage.getState(), registerStateMileage.getMileage()));
         return VehicleMileageReportItem.builder()
                 .vehicleID(truckState.getTruckId())
                 .endingOdometer(truckState.getEndOdometer())
-                .states(new ArrayList(Arrays.asList(state)))
-                .state(state)
                 .beginningOdometer(truckState.getStartOdometer())
-                .totalVehicleMileage(truckState.getSumTotalMiles()).build();
+                .totalVehicleMileage(truckState.getSumTotalMiles()).states(stateMileage).build();
     }
 }

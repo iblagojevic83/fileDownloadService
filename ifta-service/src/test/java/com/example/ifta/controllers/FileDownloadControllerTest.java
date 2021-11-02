@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -49,10 +50,10 @@ public class FileDownloadControllerTest {
         List<VehicleMileageReportItem> vehicleData = new ArrayList<>();
         VehicleMileageReportItem data = new VehicleMileageReportItem("UA-test", "vehicleID-test", "lastActiveGroup-test",
                 50, 50, 50,
-                50, new ArrayList(Arrays.asList("AL-test", "AR-test", "AZ-test")), "AZ");
+                50, new HashMap<>());
         VehicleMileageReportItem data1 = new VehicleMileageReportItem("UA-test-1", "vehicleID-test-1", "lastActiveGroup-test-1",
                 50, 50, 50,
-                50, new ArrayList(Arrays.asList("AL-test1", "AR-test1", "AZ-test1")), "AZ");
+                50, new HashMap<>());
         vehicleData.add(data);
         vehicleData.add(data1);
         fileDataDto.setFileType(FileTypeEnum.CSV.name());
